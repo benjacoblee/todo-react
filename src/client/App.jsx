@@ -35,13 +35,33 @@ class App extends React.Component {
     }
   }
 
+  deleteTodo(todo, index) {
+    this.state.todos.splice(index, 1);
+    this.setState({ todos: this.state.todos });
+  }
+
   render() {
     console.log(this);
     const todoArr = this.state.todos;
     let todoEl;
     if (todoArr.length > 0) {
       todoEl = this.state.todos.map((todo, index) => {
-        return <li key={index}>{todo}</li>;
+        return (
+          <div>
+            <li key={index}>
+              {todo}{" "}
+              <button
+                todo={todo}
+                index={index}
+                onClick={() => {
+                  this.deleteTodo(todo, index);
+                }}
+              >
+                x
+              </button>
+            </li>
+          </div>
+        );
       });
     }
     return (
