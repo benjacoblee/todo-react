@@ -51,7 +51,7 @@ class App extends React.Component {
       todoEl = this.state.todos.map((todo, index) => {
         return (
           <div key={index}>
-            <li>
+            <p className="my-3">
               {todo}{" "}
               <button
                 onClick={() => {
@@ -60,13 +60,13 @@ class App extends React.Component {
               >
                 x
               </button>
-            </li>
+            </p>
           </div>
         );
       });
     }
     return (
-      <div>
+      <div className="container">
         <input
           onChange={event => {
             this.handleInputField(event);
@@ -80,7 +80,7 @@ class App extends React.Component {
         >
           Add todo
         </button>
-        <ul>{todoEl}</ul>
+        <div>{todoEl}</div>
         <p>{this.state.lengthValidationMessage}</p>
       </div>
     );
