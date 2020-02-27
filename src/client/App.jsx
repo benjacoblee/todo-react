@@ -17,6 +17,7 @@ class App extends React.Component {
   }
 
   addTodo() {
+    console.log(this.props);
     console.log(this.state.currentInput.length);
     if (
       this.state.currentInput.length > 1 &&
@@ -25,6 +26,7 @@ class App extends React.Component {
       this.state.todos.push(this.state.currentInput);
       this.setState({ todos: this.state.todos });
       this.setState({ lengthValidationMessage: "" });
+      this.refs.input.value = "";
     } else {
       this.setState({
         lengthValidationMessage:
@@ -34,6 +36,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this);
     const todoArr = this.state.todos;
     let todoEl;
     if (todoArr.length > 0) {
@@ -47,6 +50,7 @@ class App extends React.Component {
           onChange={event => {
             this.handleInputField(event);
           }}
+          ref="input"
         ></input>
         <button
           onClick={event => {
