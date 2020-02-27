@@ -6,7 +6,8 @@ class App extends React.Component {
     super();
     this.state = {
       currentInput: "",
-      todos: []
+      todos: [],
+      lengthValidationMessage: ""
     };
   }
 
@@ -16,8 +17,20 @@ class App extends React.Component {
   }
 
   addTodo() {
-    this.state.todos.push(this.state.currentInput);
-    this.setState({ todos: this.state.todos });
+    console.log(this.state.currentInput.length);
+    if (
+      this.state.currentInput.length > 1 &&
+      this.state.currentInput.length < 200
+    ) {
+      this.state.todos.push(this.state.currentInput);
+      this.setState({ todos: this.state.todos });
+      this.setState({ lengthValidationMessage: "" });
+    } else {
+      this.setState({
+        lengthValidationMessage:
+          "Please enter a todo that's greater than 1 character and less than 200 characters!"
+      });
+    }
   }
 
   render() {
@@ -43,6 +56,7 @@ class App extends React.Component {
           Add todo
         </button>
         <ul>{todoEl}</ul>
+        <p>{this.state.lengthValidationMessage}</p>
       </div>
     );
   }
