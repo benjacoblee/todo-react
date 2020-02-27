@@ -30,6 +30,7 @@ class App extends React.Component {
       this.setState({ todos: this.state.todos });
       this.setState({ lengthValidationMessage: "" });
       this.refs.input.value = "";
+      this.setState({ currentInput: "" });
     } else {
       this.setState({
         lengthValidationMessage:
