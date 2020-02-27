@@ -1,5 +1,6 @@
 import React from "react";
 import { hot } from "react-hot-loader";
+import moment from "moment";
 
 class App extends React.Component {
   constructor() {
@@ -23,7 +24,9 @@ class App extends React.Component {
       this.state.currentInput.length > 1 &&
       this.state.currentInput.length < 200
     ) {
-      this.state.todos.push(this.state.currentInput);
+      this.state.todos.push(
+        this.state.currentInput + " created at: " + moment().format("MMM Do YY")
+      );
       this.setState({ todos: this.state.todos });
       this.setState({ lengthValidationMessage: "" });
       this.refs.input.value = "";
@@ -47,12 +50,10 @@ class App extends React.Component {
     if (todoArr.length > 0) {
       todoEl = this.state.todos.map((todo, index) => {
         return (
-          <div>
-            <li key={index}>
+          <div key={index}>
+            <li>
               {todo}{" "}
               <button
-                todo={todo}
-                index={index}
                 onClick={() => {
                   this.deleteTodo(todo, index);
                 }}
