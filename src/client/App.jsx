@@ -17,10 +17,17 @@ class App extends React.Component {
 
   addTodo() {
     this.state.todos.push(this.state.currentInput);
-    console.log(this.state.todos)
+    this.setState({ todos: this.state.todos });
   }
 
   render() {
+    const todoArr = this.state.todos;
+    let todoEl;
+    if (todoArr.length > 0) {
+      todoEl = this.state.todos.map((todo, index) => {
+        return <li key={index}>{todo}</li>;
+      });
+    }
     return (
       <div>
         <input
@@ -35,6 +42,7 @@ class App extends React.Component {
         >
           Add todo
         </button>
+        <ul>{todoEl}</ul>
       </div>
     );
   }
