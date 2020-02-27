@@ -14,19 +14,17 @@ class App extends React.Component {
 
   handleInputField(event) {
     this.setState({ currentInput: event.target.value });
-    console.log(this.state.currentInput);
   }
 
   addTodo() {
-    console.log(this.props);
-    console.log(this.state.currentInput.length);
     if (
       this.state.currentInput.length > 1 &&
       this.state.currentInput.length < 200
     ) {
-      this.state.todos.push(
-        this.state.currentInput + " created at: " + moment().format("MMM Do YY")
-      );
+      this.state.todos.push({
+        title: this.state.currentInput,
+        date: moment().format("MMM Do YY")
+      });
       this.setState({ todos: this.state.todos });
       this.setState({ lengthValidationMessage: "" });
       this.refs.input.value = "";
@@ -34,7 +32,7 @@ class App extends React.Component {
     } else {
       this.setState({
         lengthValidationMessage:
-          "Please enter a todo that's greater than 1 character and less than 200 characters!"
+          "Please enter a description that's greater than 1 character and less than 200 characters!"
       });
     }
   }
@@ -45,7 +43,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this);
     const todoArr = this.state.todos;
     let todoEl;
     if (todoArr.length > 0) {
@@ -53,7 +50,8 @@ class App extends React.Component {
         return (
           <div key={index}>
             <p className="my-3">
-              {todo}{" "}
+              <strong>Title:</strong> {todo.title}{" "} 
+              <strong>Created at:</strong> {todo.date}
               <button
                 onClick={() => {
                   this.deleteTodo(todo, index);
