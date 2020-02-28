@@ -3,6 +3,7 @@ import { hot } from "react-hot-loader";
 import moment from "moment";
 import Form from "./Form";
 import ItemList from "./ItemList";
+import DeletedItems from "./DeletedItems";
 
 class App extends React.Component {
   constructor() {
@@ -10,12 +11,12 @@ class App extends React.Component {
     this.state = {
       currentInput: "",
       todos: [],
-      lengthValidationMessage: ""
+      lengthValidationMessage: "",
+      deletedTodos: []
     };
   }
 
   addTodo() {
-    console.log(this);
     if (
       this.state.currentInput.length > 1 &&
       this.state.currentInput.length < 200
@@ -54,8 +55,14 @@ class App extends React.Component {
     };
 
     const deleteTodo = (todo, index) => {
-      this.state.todos.splice(index, 1);
-      this.setState({ todos: this.state.todos });
+      const deletedTodo = this.state.todos.splice(index, 1);
+      this.setState({
+        todos: this.state.todos
+      });
+
+      this.setState({
+        deletedTodos: [deletedTodo, ...this.state.deletedTodos]
+      });
     };
 
     return (
@@ -66,6 +73,7 @@ class App extends React.Component {
         />
         <ItemList todos={this.state.todos} deleteTodo={deleteTodo} />
         <p>{this.state.lengthValidationMessage}</p>
+        <DeletedItems deletedTodos={this.state.deletedTodos} />
       </div>
     );
   }

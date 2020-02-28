@@ -4,7 +4,8 @@ export class Form extends Component {
   constructor() {
     super();
     this.state = {
-      word: ""
+      word: "",
+      something: ""
     };
   }
   handleInputField(event) {
@@ -17,7 +18,6 @@ export class Form extends Component {
     this.refs.input.value = "";
   }
   render() {
-    console.log(this.props);
     return (
       <div>
         <input
