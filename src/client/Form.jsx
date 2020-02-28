@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 
 export class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      word: ""
+    };
+  }
   handleInputField(event) {
+    this.setState({ word: event.target.value });
     this.setState({ currentInput: event.target.value });
     this.props.handleInputField(event);
   }
@@ -18,6 +25,7 @@ export class Form extends Component {
             this.handleInputField(e);
           }}
           ref="input"
+          value={this.state.word}
         ></input>
         <button
           onClick={e => {

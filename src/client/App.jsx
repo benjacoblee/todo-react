@@ -15,16 +15,22 @@ class App extends React.Component {
   }
 
   addTodo() {
-    console.log(this)
+    console.log(this);
     if (
       this.state.currentInput.length > 1 &&
       this.state.currentInput.length < 200
     ) {
-      this.state.todos.push({
-        title: this.state.currentInput,
-        date: moment().format("MMM Do YY")
+      // this.state.todos.push();
+      this.setState({
+        todos: [
+          {
+            title: this.state.currentInput,
+            date: moment().format("MMM Do YY")
+          },
+          ...this.state.todos
+        ]
       });
-      this.setState({ todos: this.state.todos });
+      // this.setState({ todos: this.state.todos });
       // this.setState({ lengthValidationMessage: "" });
       // this.refs.input.value = "";
       // this.setState({ currentInput: "" });
