@@ -1,6 +1,8 @@
 import React from "react";
 import { hot } from "react-hot-loader";
 import moment from "moment";
+import Form from "./Form";
+import ItemList from "./ItemList";
 
 class App extends React.Component {
   constructor() {
@@ -12,11 +14,8 @@ class App extends React.Component {
     };
   }
 
-  handleInputField(event) {
-    this.setState({ currentInput: event.target.value });
-  }
-
   addTodo() {
+    console.log(this)
     if (
       this.state.currentInput.length > 1 &&
       this.state.currentInput.length < 200
@@ -26,9 +25,9 @@ class App extends React.Component {
         date: moment().format("MMM Do YY")
       });
       this.setState({ todos: this.state.todos });
-      this.setState({ lengthValidationMessage: "" });
-      this.refs.input.value = "";
-      this.setState({ currentInput: "" });
+      // this.setState({ lengthValidationMessage: "" });
+      // this.refs.input.value = "";
+      // this.setState({ currentInput: "" });
     } else {
       this.setState({
         lengthValidationMessage:
@@ -37,49 +36,29 @@ class App extends React.Component {
     }
   }
 
-  deleteTodo(todo, index) {
-    this.state.todos.splice(index, 1);
-    this.setState({ todos: this.state.todos });
-  }
-
   render() {
-    const todoArr = this.state.todos;
-    let todoEl;
-    if (todoArr.length > 0) {
-      todoEl = this.state.todos.map((todo, index) => {
-        return (
-          <div key={index}>
-            <p className="my-3">
-              <strong>Title:</strong> {todo.title}{" "} 
-              <strong>Created at:</strong> {todo.date}
-              <button
-                onClick={() => {
-                  this.deleteTodo(todo, index);
-                }}
-              >
-                x
-              </button>
-            </p>
-          </div>
-        );
-      });
-    }
+    const handleInputField = e => {
+      this.setState({ currentInput: e.target.value });
+    };
+
+    const clickHandler = e => {
+      if (e) {
+        this.addTodo();
+      }
+    };
+
+    const deleteTodo = (todo, index) => {
+      this.state.todos.splice(index, 1);
+      this.setState({ todos: this.state.todos });
+    };
+
     return (
       <div className="container">
-        <input
-          onChange={event => {
-            this.handleInputField(event);
-          }}
-          ref="input"
-        ></input>
-        <button
-          onClick={event => {
-            this.addTodo(event);
-          }}
-        >
-          Add todo
-        </button>
-        <div>{todoEl}</div>
+        <Form
+          handleInputField={handleInputField.bind(this)}
+          clickHandler={clickHandler}
+        />
+        <ItemList todos={this.state.todos} deleteTodo={deleteTodo} />
         <p>{this.state.lengthValidationMessage}</p>
       </div>
     );
